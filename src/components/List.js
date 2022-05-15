@@ -9,14 +9,14 @@ import AddPost from "./AddPost";
 const List = () => {
   const [postData, setPostData] = useState([]);
 
+  const url = "https://jsonplaceholder.typicode.com/posts/";
+
   useEffect(() => {
     fetchPostData();
   }, []);
 
-  let postId = 0;
-
   const fetchPostData = async () => [
-    await fetch(`https://jsonplaceholder.typicode.com/posts?_start=0&_limit=5`)
+    await fetch(`${url}?_start=0&_limit=5`)
       .then((data) => data.json())
       .then((data) => setPostData(data))
       .catch((err) => {
@@ -25,7 +25,7 @@ const List = () => {
   ];
 
   const addNewPost = async (small_id, title, body) => {
-    await fetch("https://jsonplaceholder.typicode.com/posts", {
+    await fetch(url, {
       method: "POST",
       body: JSON.stringify({
         id: small_id,
@@ -54,7 +54,7 @@ const List = () => {
   };
 
   const onDeletePost = async (id) => {
-    await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    await fetch(`${url}${id}`, {
       method: "DELETE",
     })
       .then((res) => {
@@ -73,14 +73,14 @@ const List = () => {
       });
   };
 
-  const onEditPost = async (id) => {
+  const onEditPost = async (id, title, body) => {
     console.log(id);
-    await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    await fetch(`${url}${id}`, {
       method: "PUT",
       body: JSON.stringify({
         id: id,
-        title: "foo",
-        body: "bar",
+        title: title,
+        body: body,
         userId: 1,
       }),
       headers: {

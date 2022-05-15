@@ -15,9 +15,8 @@ const Post = ({ id, title, body, onDeletePost, onEditPost }) => {
   const handleDeletePost = () => {
     onDeletePost(id);
   };
-
-  const handleEditPost = () => {
-    onEditPost(id);
+  const updatePost = () => {
+    onEditPost(id, title, body);
   };
 
   return (
@@ -48,7 +47,12 @@ const Post = ({ id, title, body, onDeletePost, onEditPost }) => {
             <Button size="small" onClick={() => navigate(`/post/${id}`)}>
               View
             </Button>
-            <FormDialog />
+            <FormDialog
+              id={id}
+              title={title}
+              body={body}
+              updatePost={updatePost}
+            />
             {/* <Button size="small" onClick={handleEditPost}>
               Edit
             </Button> */}

@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function FormDialog() {
+export default function FormDialog(id, title, body, updatePost) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -17,8 +17,17 @@ export default function FormDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleOnSubmit = (e) => {
-    console.log("Submitted");
+  const handleOnEdit = (e) => {
+    e.preventDefault();
+    if ((e.target.title.value && e.target.body.value) !== "") {
+      updatePost(id, e.target.title.value, e.target.body.value);
+      e.target.title.value = "";
+      e.target.body.value = "";
+    } else {
+      alert("Please Enter Title And Description");
+    }
+    console.log("im here");
+    setOpen(false);
   };
   return (
     <div>
@@ -28,7 +37,7 @@ export default function FormDialog() {
       <Dialog open={open} onClose={handleClose} fullWidth={true}>
         <DialogTitle>Edit Post</DialogTitle>
         <DialogContent>
-          <form onSubmit={handleOnSubmit}>
+          <form onSubmit={handleOnEdit}>
             <Grid
               sx={{
                 display: "flex",
@@ -39,6 +48,7 @@ export default function FormDialog() {
                 sx={{
                   my: 2,
                 }}
+                defaultValue={id.title}
                 id="outlined-name"
                 label="Title"
                 name="title"
@@ -47,18 +57,14 @@ export default function FormDialog() {
                 sx={{
                   py: 2,
                 }}
+                defaultValue={id.body}
                 id="outlined-name"
                 label="Description"
                 name="body"
               />
-              <Button
-                variant="contained"
-                type="submit"
-                onSubmit={handleOnSubmit}
-              >
+              <Button variant="contained" type="submit" onClick={handleOnEdit}>
                 Update
               </Button>
-              {/* <button onSubmit={handleOnSubmit}>Submit</button> */}
             </Grid>
           </form>
         </DialogContent>

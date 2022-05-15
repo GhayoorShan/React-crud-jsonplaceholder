@@ -13,6 +13,7 @@ const ViewPost = () => {
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
 
+  const url = "https://jsonplaceholder.typicode.com/posts/";
   let id = window.location.toString().split("/post/")[1];
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const ViewPost = () => {
   }, []);
 
   const fetchCurrentPost = async () => [
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+    fetch(`${url}${id}`)
       .then((data) => data.json())
       .then((data) => setPost(data))
       .catch((err) => {
@@ -29,7 +30,7 @@ const ViewPost = () => {
       }),
   ];
   const fetchComments = async () => [
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
+    fetch(`${url}${id}/comments`)
       .then((data) => data.json())
       .then((data) => setComments(data))
       .catch((err) => {

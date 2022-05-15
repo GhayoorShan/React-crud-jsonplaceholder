@@ -42,7 +42,7 @@ const AddPost = ({ addNewPost }) => {
             label="Description"
             name="body"
           />
-          <Button variant="contained" type="submit" onSubmit={handleOnSubmit}>
+          <Button variant="contained" type="submit">
             Submit
           </Button>
           {/* <button onSubmit={handleOnSubmit}>Submit</button> */}

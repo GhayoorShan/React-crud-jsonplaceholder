@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import {
+  Container,
+  Grid,
+  CardActions,
+  CardContent,
+  Typography,
+  CardMedia,
+} from "@mui/material";
+
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import CardMedia from "@mui/material/CardMedia";
 
 const ViewPost = () => {
   const [post, setPost] = useState([]);

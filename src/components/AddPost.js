@@ -30,7 +30,7 @@ const AddPost = ({ addNewPost }) => {
             sx={{
               py: 1,
             }}
-            id="outlined-name"
+            id="title"
             label="Title"
             name="title"
           />
@@ -38,7 +38,7 @@ const AddPost = ({ addNewPost }) => {
             sx={{
               py: 2,
             }}
-            id="outlined-name"
+            id="body"
             label="Description"
             name="body"
           />

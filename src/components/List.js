@@ -74,23 +74,32 @@ const List = () => {
   };
 
   const onEditPost = async (id, title, body) => {
-    console.log(id);
     await fetch(`${url}${id}`, {
       method: "PUT",
       body: JSON.stringify({
+        userId: 1,
         id: id,
         title: title,
         body: body,
-        userId: 1,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then((data) => data.json())
-      .then((data) => setPostData(data))
-      .catch((err) => {
-        console.log(err);
+      .then((res) => {
+        return res.json();
+      })
+
+      .then((data) => {
+        const temp = [...postData];
+        const index = temp.findIndex((obj) => obj.id === id);
+        temp[index] = {
+          id,
+          title: data.title,
+          body: data.body,
+          userId: 1,
+        };
+        setPostData((postData) => [...temp]);
       });
   };
 

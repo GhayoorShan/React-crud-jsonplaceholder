@@ -1,22 +1,44 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import Button from "@mui/material/Button";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import FormDialog from "./CustomDialog";
+import {
+  Grid,
+  Card,
+  Button,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 
 const Post = ({ id, title, body, onDeletePost, onEditPost }) => {
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleDeletePost = () => {
     onDeletePost(id);
   };
-  const updatePost = () => {
-    onEditPost(id, title, body);
+
+  const handleOnEdit = (e) => {
+    e.preventDefault();
+    if ((e.target.title.value && e.target.body.value) !== "") {
+      onEditPost(id, e.target.title.value, e.target.body.value);
+      e.target.title.value = "";
+      e.target.body.value = "";
+      setOpen(false);
+    } else alert("Please Enter Title And Description");
   };
 
   return (
@@ -47,21 +69,56 @@ const Post = ({ id, title, body, onDeletePost, onEditPost }) => {
             <Button size="small" onClick={() => navigate(`/post/${id}`)}>
               View
             </Button>
-            <FormDialog
-              id={id}
-              title={title}
-              body={body}
-              updatePost={updatePost}
-            />
-            {/* <Button size="small" onClick={handleEditPost}>
+            <Button size="small" onClick={handleClickOpen}>
               Edit
-            </Button> */}
+            </Button>
+
             <Button size="small" onClick={handleDeletePost}>
               Delete
             </Button>
           </CardActions>
         </Card>
       </Grid>
+      <div>
+        <Dialog open={open} onClose={handleClose} fullWidth={true}>
+          <DialogTitle>Edit Post</DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleOnEdit}>
+              <Grid
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <TextField
+                  sx={{
+                    my: 2,
+                  }}
+                  defaultValue={title}
+                  id="title"
+                  label="Title"
+                  name="title"
+                />
+                <TextField
+                  sx={{
+                    py: 2,
+                  }}
+                  defaultValue={body}
+                  id="body"
+                  label="Description"
+                  name="body"
+                />
+                <Button variant="contained" type="submit">
+                  Update
+                </Button>
+              </Grid>
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </>
   );
 };
